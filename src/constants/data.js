@@ -241,3 +241,42 @@ export const MOCK_OFFERS = [
         expiresIn: '24h',
     },
 ];
+
+export const MOCK_SELLER_PRODUCTS = [
+    {
+        id: 'sp1',
+        name: 'Vintage Chicago Bulls Tee',
+        price: 45.00,
+        image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80',
+        description: 'Authentic 90s vintage tee in excellent condition. Size L.',
+        rating: 4.8,
+        reviews: 124
+    },
+    {
+        id: 'sp2',
+        name: 'Retro Denim Jacket',
+        price: 85.00,
+        image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
+        description: 'Classic oversized denim jacket with Sherpa lining.',
+        rating: 4.5,
+        reviews: 89
+    },
+    {
+        id: 'sp3',
+        name: 'Limited Ed. Sneakers',
+        price: 120.00,
+        image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=600&q=80',
+        description: 'Never worn, original box included. Size US 10.',
+        rating: 5.0,
+        reviews: 210
+    },
+    {
+        id: 'sp4',
+        name: 'Leather Crossbody Bag',
+        price: 65.00,
+        image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80',
+        description: 'Handcrafted leather bag with brass fittings.',
+        rating: 4.7,
+        reviews: 156
+    }
+];

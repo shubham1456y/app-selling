@@ -23,6 +23,10 @@ import CategoryLiveScreen from '../screens/CategoryLiveScreen';
 import ActivityScreen from '../screens/ActivityScreen';
 import PaymentsShippingScreen from '../screens/PaymentsShippingScreen';
 import AddressScreen from '../screens/AddressScreen';
+import SellerStoreScreen from '../screens/SellerStoreScreen';
+import ProductDetailsScreen from '../screens/ProductDetailsScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
+import OrderConfirmationScreen from '../screens/OrderConfirmationScreen';
 import { COLORS } from '../constants/colors';
 
 const Stack = createNativeStackNavigator();
@@ -83,6 +87,10 @@ export default function Navigation() {
                 <Stack.Screen name="Notifications" component={NotificationsScreen} />
                 <Stack.Screen name="Subcategory" component={SubcategoryScreen} />
                 <Stack.Screen name="CategoryLive" component={CategoryLiveScreen} />
+                <Stack.Screen name="SellerStore" component={SellerStoreScreen} />
+                <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+                <Stack.Screen name="Checkout" component={CheckoutScreen} />
+                <Stack.Screen name="OrderConfirmation" component={OrderConfirmationScreen} />
                 <Stack.Screen name="Main" component={TabNavigator} />
                 <Stack.Screen name="PaymentsShipping" component={PaymentsShippingScreen} />
                 <Stack.Screen name="Address" component={AddressScreen} />

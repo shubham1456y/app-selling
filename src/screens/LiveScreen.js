@@ -52,18 +52,14 @@ export default function LiveScreen({ route, navigation }) {
                         ))}
                     </View>
 
-                    {/* Product Card */}
-                    <View style={styles.productCard}>
-                        <Image source={{ uri: MOCK_PRODUCT.image }} style={styles.productImage} />
-                        <View style={styles.productInfo}>
-                            <Text style={styles.productName} numberOfLines={1}>{MOCK_PRODUCT.name}</Text>
-                            <Text style={styles.productPrice}>${MOCK_PRODUCT.price}</Text>
-                            <Text style={styles.productStock}>Only {MOCK_PRODUCT.stock} left!</Text>
-                        </View>
-                        <TouchableOpacity style={styles.buyButton}>
-                            <Text style={styles.buyButtonText}>BUY</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {/* Shop Button */}
+                    <TouchableOpacity
+                        style={styles.shopButton}
+                        onPress={() => navigation.navigate('SellerStore', { seller })}
+                    >
+                        <ShoppingBag color="#FFF" size={20} />
+                        <Text style={styles.shopButtonText}>Shop Store</Text>
+                    </TouchableOpacity>
 
                     {/* Bottom Actions */}
                     <View style={styles.actionsBar}>
@@ -184,47 +180,21 @@ const styles = StyleSheet.create({
     messageText: {
         color: '#FFF',
     },
-    productCard: {
-        backgroundColor: '#FFF',
-        borderRadius: 12,
-        padding: 12,
+    shopButton: {
+        backgroundColor: COLORS.accent,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 24,
         marginBottom: 16,
+        gap: 8,
     },
-    productImage: {
-        width: 48,
-        height: 48,
-        borderRadius: 8,
-        backgroundColor: '#eee',
-    },
-    productInfo: {
-        flex: 1,
-        marginLeft: 12,
-    },
-    productName: {
-        fontWeight: 'bold',
-        fontSize: 14,
-        color: '#000',
-    },
-    productPrice: {
-        color: '#000',
-        fontSize: 14,
-    },
-    productStock: {
-        color: COLORS.accent,
-        fontSize: 12,
-        fontWeight: 'bold',
-    },
-    buyButton: {
-        backgroundColor: COLORS.accent,
-        paddingHorizontal: 16,
-        paddingVertical: 10,
-        borderRadius: 8,
-    },
-    buyButtonText: {
+    shopButtonText: {
         color: '#FFF',
         fontWeight: 'bold',
+        fontSize: 16,
     },
     actionsBar: {
         flexDirection: 'row',
