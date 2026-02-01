@@ -14,11 +14,15 @@
     *   **Responsibility**: Shop profiles, verification, live stream management.
     *   **Key Logic**: Stream key generation, verification workflows, aggregating follower stats.
 
-4.  **Order Service** (`orders`, `order_items`)
+4.  **Logistics Service** (`shipping_profiles`)
+    *   **Responsibility**: Managing shipping options, profiles, and costs.
+    *   **Key Logic**: Providing valid shipping methods for products.
+
+5.  **Order Service** (`orders`, `order_items`)
     *   **Responsibility**: Cart processing, order placement, order history.
     *   **Key Logic**: Price calculation snapshots, status state machine (Pending -> Confirmed -> Shipped).
 
-5.  **Payment Service** (`payments`)
+6.  **Payment Service** (`payments`)
     *   **Responsibility**: Gateway integration (Stripe/Google Pay), transaction auditing.
     *   **Key Logic**: Webhook handling, reconciliation, secure token management.
 

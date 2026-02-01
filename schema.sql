@@ -67,6 +67,9 @@ CREATE INDEX idx_addresses_user_id ON addresses(user_id);
 -- ==========================================
 -- 4. Sellers (Shop Profiles)
 -- ==========================================
+-- ==========================================
+-- 4. Sellers (Shop Profiles)
+-- ==========================================
 CREATE TABLE sellers (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -74,9 +77,18 @@ CREATE TABLE sellers (
     shop_description TEXT,
     logo_url TEXT,
     banner_url TEXT,
+    
+    -- Application Data
+    category VARCHAR(100), -- Primary category from application
+    experience_level VARCHAR(50), 
+    monthly_revenue VARCHAR(50),
+    platforms JSONB DEFAULT '[]', -- Other platforms they sell on
+    social_links JSONB DEFAULT '{}', -- Instagram, TikTok, etc.
+    return_address JSONB, -- { fullName, address1, ... }
+    
     business_address TEXT,
     is_verified BOOLEAN DEFAULT FALSE,
-    rating DECIMAL(3, 2) DEFAULT 0.00, -- Cached aggregate rating
+    rating DECIMAL(3, 2) DEFAULT 0.00,
     review_count INTEGER DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -89,9 +101,22 @@ CREATE TABLE categories (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(100) NOT NULL,
     slug VARCHAR(100) UNIQUE NOT NULL,
-    icon_name VARCHAR(50), -- Lucide icon name
-    parent_id UUID REFERENCES categories(id) ON DELETE SET NULL, -- For subcategories
+    icon_name VARCHAR(50),
+    parent_id UUID REFERENCES categories(id) ON DELETE SET NULL,
     is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================
+-- 5.5 Shipping Profiles (Normalized)
+-- ==========================================
+CREATE TABLE shipping_profiles (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR(100) NOT NULL, -- e.g., "Standard Shipping"
+    description VARCHAR(255), -- e.g., "3-5 days"
+    estimated_days_min INTEGER,
+    estimated_days_max INTEGER,
+    is_system_default BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -106,6 +131,10 @@ CREATE TABLE products (
     description TEXT,
     price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
     stock_quantity INTEGER NOT NULL DEFAULT 0 CHECK (stock_quantity >= 0),
+    
+    -- Normalized Shipping
+    shipping_profile_id UUID REFERENCES shipping_profiles(id) ON DELETE SET NULL,
+    
     images JSONB DEFAULT '[]', -- Array of image URLs
     rating DECIMAL(3, 2) DEFAULT 0.00,
     review_count INTEGER DEFAULT 0,

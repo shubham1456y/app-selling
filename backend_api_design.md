@@ -121,8 +121,13 @@
   ```json
   {
     "shop_name": "Vintage Vault",
-    "shop_description": "Best vintage finds",
-    "business_address": "..."
+    "category": "Fashion",
+    "experience_level": "I sell occasionally",
+    "monthly_revenue": "$1000-$5000",
+    "platforms": ["eBay", "Poshmark"],
+    "social_links": { "instagram": "@vintage", "website": "..." },
+    "return_address": { "full_name": "...", "post_code": "..." },
+    "agreed_to_terms": true
   }
   ```
 - **Response**:
@@ -154,7 +159,7 @@
 
 ## 4. Products Module
 **Purpose**: Manage inventory, searching, and product details.
-**Tables**: `products`, `categories`
+**Tables**: `products`, `categories`, `shipping_profiles`
 
 ### GET /products
 - **Endpoint**: Search and filter products
@@ -181,7 +186,7 @@
 - **Endpoint**: Create a product (Seller only)
 - **Method**: POST
 - **Route**: `/api/v1/products`
-- **Auth**: Role: Seller
+- **Auth**: **Role: Seller**
 - **Request Body**:
   ```json
   {
@@ -190,9 +195,23 @@
     "description": "...",
     "stock_quantity": 5,
     "images": ["url1", "url2"],
-    "category_id": "uuid"
+    "category_id": "uuid",
+    "shipping_profile_id": "uuid"
   }
   ```
+
+### PATCH /products/:id
+- **Endpoint**: Update product details
+- **Method**: PATCH
+- **Route**: `/api/v1/products/:id`
+- **Auth**: **Role: Seller + Owner** (Must own the product)
+- **Request Body**: Partial product object
+
+### DELETE /products/:id
+- **Endpoint**: Remove a product
+- **Method**: DELETE
+- **Route**: `/api/v1/products/:id`
+- **Auth**: **Role: Seller + Owner** (Must own the product)
 
 ---
 
@@ -211,12 +230,15 @@
 - **Endpoint**: Start/Schedule a stream
 - **Method**: POST
 - **Route**: `/api/v1/streams`
-- **Auth**: Role: Seller
+- **Auth**: **Role: Seller** (One active stream per seller limit)
 - **Request Body**:
   ```json
   {
     "title": "Friday Night Drop",
-    "scheduled_at": "ISO_DATE"
+    "scheduled_at": "ISO_DATE",
+    "description": "...", 
+    "category": "Sneakers", 
+    "tags": ["nike", "jordan"]
   }
   ```
 
