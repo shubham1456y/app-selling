@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, TextInput, TouchableWithoutFeedback } from 'react-native';
 import { COLORS } from '../constants/colors';
 import { MOCK_PRODUCT } from '../constants/data';
 import { Button } from '../components/Button';
@@ -82,11 +82,26 @@ const ActionButton = ({ icon: Icon }) => (
     </TouchableOpacity>
 );
 
-const InputPlaceholder = () => (
-    <View style={styles.inputContainer}>
-        <Text style={{ color: 'rgba(255,255,255,0.7)' }}>Say something...</Text>
-    </View>
-);
+const InputPlaceholder = () => {
+    const inputRef = React.useRef(null);
+    return (
+        <React.Fragment>
+            <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        ref={inputRef}
+                        style={styles.chatInput}
+                        placeholder="Say something..."
+                        placeholderTextColor="rgba(255,255,255,0.7)"
+                    />
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableOpacity style={styles.sendButton}>
+                <MessageCircle color="#FFF" size={20} />
+            </TouchableOpacity>
+        </React.Fragment>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -207,6 +222,20 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingHorizontal: 16,
         justifyContent: 'center',
+    },
+    chatInput: {
+        flex: 1,
+        color: '#FFF',
+        fontSize: 14,
+    },
+    sendButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: COLORS.accent,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 8,
     },
     actionButtons: {
         flexDirection: 'row',

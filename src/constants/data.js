@@ -9,6 +9,7 @@ export const MOCK_SELLERS = [
         title: 'Rare Jordan Drop! 👟🔥',
         subcategory: 'jordan',
         image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=600&q=80',
+        isFollowed: true,
     },
     {
         id: '2',
@@ -19,6 +20,7 @@ export const MOCK_SELLERS = [
         isLive: true,
         title: '90s Thrift Haul 👕',
         image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80',
+        isFollowed: true,
     },
     {
         id: '3',
@@ -29,6 +31,7 @@ export const MOCK_SELLERS = [
         isLive: true,
         title: 'Live Auction: iPhone 15 📱',
         image: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=600&q=80',
+        isFollowed: false,
     },
     {
         id: '4',
@@ -39,6 +42,7 @@ export const MOCK_SELLERS = [
         isLive: true,
         title: 'Gucci & LV Drop 👜',
         image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80',
+        isFollowed: true,
     },
     {
         id: '5',
@@ -49,6 +53,7 @@ export const MOCK_SELLERS = [
         isLive: true,
         title: 'PS5 & Retro Games 🎮',
         image: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=600&q=80',
+        isFollowed: false,
     },
     {
         id: '6',
@@ -59,6 +64,7 @@ export const MOCK_SELLERS = [
         isLive: true,
         title: 'Rolex & Omega Vintage ⌚',
         image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=600&q=80',
+        isFollowed: false,
     },
     {
         id: '7',
@@ -69,6 +75,7 @@ export const MOCK_SELLERS = [
         isLive: true,
         title: 'Yeezy Slide Restock 🩴',
         image: 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?auto=format&fit=crop&w=600&q=80',
+        isFollowed: true,
     },
     {
         id: '8',
@@ -79,6 +86,46 @@ export const MOCK_SELLERS = [
         isLive: true,
         title: 'Pokemon Base Box 🃏',
         image: 'https://images.unsplash.com/photo-1613771404721-c5baca102c00?auto=format&fit=crop&w=600&q=80',
+        isFollowed: false,
+    },
+];
+
+export const MOCK_SCHEDULED_STREAMS = [
+    {
+        id: 's1',
+        sellerName: 'SneakerHeadz',
+        sellerImage: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=100&q=80',
+        title: 'Nike Dunk Low Panda Restock',
+        date: 'Today, 8:00 PM',
+        category: 'Sneakers',
+        reminderSet: false,
+    },
+    {
+        id: 's2',
+        sellerName: 'Luxe Bags',
+        sellerImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80',
+        title: 'Vintage Chanel Collection',
+        date: 'Tomorrow, 6:00 PM',
+        category: 'Bags',
+        reminderSet: true,
+    },
+    {
+        id: 's3',
+        sellerName: 'Vintage Vault',
+        sellerImage: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80',
+        title: 'Rare 80s Rock Tees',
+        date: 'Feb 5, 2:00 PM',
+        category: 'Vintage',
+        reminderSet: false,
+    },
+    {
+        id: 's4',
+        sellerName: 'Kicks 4 Days',
+        sellerImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80',
+        title: 'Sunday Clean Out Sale',
+        date: 'Feb 8, 12:00 PM',
+        category: 'Sneakers',
+        reminderSet: false,
     },
 ];
 

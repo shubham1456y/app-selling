@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { TextInput, View, Text, StyleSheet, Animated } from 'react-native';
+import { TextInput, View, Text, StyleSheet, Animated, TouchableWithoutFeedback } from 'react-native';
 import { PREMIUM_COLORS } from '../constants/premiumColors';
 import { TYPOGRAPHY } from '../constants/typography';
 import { LAYOUT } from '../constants/layout';
@@ -116,58 +116,67 @@ export const Input = ({
         transform: [{ translateX: shakeAnim }],
     };
 
+    const inputRef = useRef(null);
+
+    const handleContainerPress = () => {
+        inputRef.current?.focus();
+    };
+
     return (
-        <Animated.View style={[styles.container, animatedStyle, style]}>
-            {label && (
-                <Animated.Text
+        <TouchableWithoutFeedback onPress={handleContainerPress}>
+            <Animated.View style={[styles.container, animatedStyle, style]}>
+                {label && (
+                    <Animated.Text
+                        style={[
+                            styles.label,
+                            {
+                                color: labelColor,
+                                top: labelTop,
+                                fontSize: labelFontSize,
+                            },
+                        ]}
+                    >
+                        {label}
+                    </Animated.Text>
+                )}
+                <Animated.View
                     style={[
-                        styles.label,
+                        styles.inputContainer,
                         {
-                            color: labelColor,
-                            top: labelTop,
-                            fontSize: labelFontSize,
+                            borderColor: borderColor,
+                            borderWidth: isFocused ? 2 : 1,
                         },
+                        error && styles.inputContainerError,
                     ]}
                 >
-                    {label}
-                </Animated.Text>
-            )}
-            <Animated.View
-                style={[
-                    styles.inputContainer,
-                    {
-                        borderColor: borderColor,
-                        borderWidth: isFocused ? 2 : 1,
-                    },
-                    error && styles.inputContainerError,
-                ]}
-            >
-                <TextInput
-                    style={[
-                        styles.input,
-                        multiline && {
-                            height: numberOfLines * 20,
-                            paddingTop: 12,
-                            textAlignVertical: 'top',
-                        },
-                    ]}
-                    placeholder={!label || (isFocused || value) ? placeholder : ''}
-                    value={value}
-                    onChangeText={onChangeText}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    keyboardType={keyboardType}
-                    secureTextEntry={secureTextEntry}
-                    placeholderTextColor={PREMIUM_COLORS.neutral.textTertiary}
-                    multiline={multiline}
-                    numberOfLines={numberOfLines}
-                    {...props}
-                />
+                    <TextInput
+                        ref={inputRef}
+                        style={[
+                            styles.input,
+                            multiline && {
+                                height: numberOfLines * 20,
+                                paddingTop: 12,
+                                textAlignVertical: 'top',
+                            },
+                        ]}
+                        placeholder={!label || (isFocused || value) ? placeholder : ''}
+                        value={value}
+                        onChangeText={onChangeText}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        keyboardType={keyboardType}
+                        secureTextEntry={secureTextEntry}
+                        placeholderTextColor={PREMIUM_COLORS.neutral.textTertiary}
+                        multiline={multiline}
+                        numberOfLines={numberOfLines}
+                        {...props}
+                    />
+                </Animated.View>
+                {error ? (
+                    <Text style={styles.errorText}>{error}</Text>
+                ) : null}
             </Animated.View>
-            {error ? (
-                <Text style={styles.errorText}>{error}</Text>
-            ) : null}
-        </Animated.View>
+        </TouchableWithoutFeedback>
     );
 };
 

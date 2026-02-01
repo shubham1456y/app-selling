@@ -9,19 +9,12 @@ import { Card } from '../components/Card';
 import { user, Bell, Shield, FileText, ChevronRight, ArrowLeft, User, MapPin, Mail, Phone, Edit2, Save, Tag, CreditCard, Lock, HelpCircle, MessageSquare, LogOut } from 'lucide-react-native';
 
 export default function SettingsScreen({ navigation }) {
-    const [viewState, setViewState] = useState('MENU'); // MENU, PROFILE
-    const [isEditing, setIsEditing] = useState(false);
-
     // Profile State
     const [profile, setProfile] = useState({
         name: 'John Doe',
         phone: '+1 234 567 8900',
         email: 'john@example.com',
     });
-
-    const toggleEdit = () => {
-        setIsEditing(!isEditing);
-    };
 
     const handleChange = (field, value) => {
         setProfile(prev => ({ ...prev, [field]: value }));
@@ -134,55 +127,24 @@ export default function SettingsScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={[styles.header, viewState === 'MENU' && styles.menuHeader]}>
-                {viewState === 'MENU' ? (
-                    <TouchableOpacity style={styles.profileHeader} onPress={() => setViewState('PROFILE')}>
-                        <View style={styles.avatarContainer}>
-                            <User size={40} color={PREMIUM_COLORS.primary.main} />
-                        </View>
-                        <View style={styles.profileInfo}>
-                            <Text style={styles.profileName}>{profile.name}</Text>
-                            <Text style={styles.viewProfileLink}>View Profile</Text>
-                        </View>
-                    </TouchableOpacity>
-                ) : (
-                    <>
-                        <TouchableOpacity onPress={() => setViewState('MENU')} style={styles.backBtn}>
-                            <ArrowLeft color={PREMIUM_COLORS.neutral.textPrimary} size={24} />
-                        </TouchableOpacity>
-
-                        <Text style={styles.headerTitle}>My Profile</Text>
-
-                        <TouchableOpacity onPress={toggleEdit}>
-                            {isEditing ? <Save color={PREMIUM_COLORS.accent.success} size={24} /> : <Edit2 color={PREMIUM_COLORS.neutral.textPrimary} size={24} />}
-                        </TouchableOpacity>
-                    </>
-                )}
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.profileHeader} onPress={() => navigation.navigate('ViewProfile', { isMe: true })}>
+                    <View style={styles.avatarContainer}>
+                        <User size={40} color={PREMIUM_COLORS.primary.main} />
+                    </View>
+                    <View style={styles.profileInfo}>
+                        <Text style={styles.profileName}>{profile.name}</Text>
+                        <Text style={styles.viewProfileLink}>View Profile</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
 
-            {viewState === 'MENU' ? renderMenu() : renderProfile()}
+            {renderMenu()}
         </SafeAreaView>
     );
 }
 
-const ProfileField = ({ icon: Icon, label, value, editable, onChange }) => (
-    <View style={styles.fieldContainer}>
-        <View style={styles.fieldHeader}>
-            <Icon size={16} color={COLORS.textSecondary} />
-            <Text style={styles.fieldLabel}>{label}</Text>
-        </View>
-        {editable ? (
-            <Input
-                value={value}
-                onChangeText={onChange}
-                placeholder={label}
-                style={{ marginTop: 8 }}
-            />
-        ) : (
-            <Text style={styles.fieldValue}>{value}</Text>
-        )}
-    </View>
-);
+
 
 const styles = StyleSheet.create({
     container: {

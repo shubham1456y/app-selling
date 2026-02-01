@@ -5,15 +5,13 @@ import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { ArrowLeft } from 'lucide-react-native';
 
-export default function SellScreen() {
+export default function SellScreen({ navigation, route }) {
     const [isSeller, setIsSeller] = useState(false);
-    const [viewState, setViewState] = useState('LANDING'); // LANDING, APPLY, DASHBOARD, ADD_PRODUCT
+    const initialView = route.params?.view || 'LANDING';
+    const [viewState, setViewState] = useState(initialView); // LANDING, DASHBOARD, ADD_PRODUCT
 
-    // Application Form State
-    const [shopName, setShopName] = useState('');
-    const [shopDesc, setShopDesc] = useState('');
-    const [shopAddress, setShopAddress] = useState('');
-    const [isApplying, setIsApplying] = useState(false);
+    // Seller Data (Mock)
+    const [shopName, setShopName] = useState('My Awesome Shop');
 
     // Add Product State
     const [prodName, setProdName] = useState('');
@@ -22,14 +20,14 @@ export default function SellScreen() {
     const [prodDesc, setProdDesc] = useState('');
     const [shippingAddress, setShippingAddress] = useState('');
 
-    const navigateTo = (state) => setViewState(state);
-
-    const handleApply = () => {
-        if (shopName && shopAddress) {
-            setIsSeller(true);
-            setViewState('DASHBOARD');
+    React.useEffect(() => {
+        if (route.params?.view) {
+            setViewState(route.params.view);
+            if (route.params.view === 'DASHBOARD') setIsSeller(true);
         }
-    };
+    }, [route.params]);
+
+    const navigateTo = (state) => setViewState(state);
 
     const handleAddProduct = () => {
         // Mock API Call
@@ -46,25 +44,8 @@ export default function SellScreen() {
             <Text style={styles.emoji}>🔒</Text>
             <Text style={styles.title}>Start Your Shop</Text>
             <Text style={styles.subtitle}>Join thousands of sellers streaming live.</Text>
-            <Button title="Apply Now" onPress={() => navigateTo('APPLY')} style={{ marginTop: 20, width: 200 }} />
+            <Button title="Apply Now" onPress={() => navigation.navigate('SellerApplication')} style={{ marginTop: 20, width: 200 }} />
         </View>
-    );
-
-    const renderApplyForm = () => (
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-            <View style={styles.headerRow}>
-                <TouchableOpacity onPress={() => navigateTo(isSeller ? 'DASHBOARD' : 'LANDING')}>
-                    <ArrowLeft color={COLORS.text} size={24} />
-                </TouchableOpacity>
-                <Text style={styles.headerTitleInline}>Seller Application</Text>
-            </View>
-
-            <Input label="Shop Name" placeholder="e.g. Vintage Vault" value={shopName} onChangeText={setShopName} />
-            <Input label="Shop Description" placeholder="What do you sell?" value={shopDesc} onChangeText={setShopDesc} multiline />
-            <Input label="Shop Address" placeholder="Street, City, Zip" value={shopAddress} onChangeText={setShopAddress} />
-
-            <Button title="Create Shop" onPress={handleApply} style={{ marginTop: 24 }} />
-        </ScrollView>
     );
 
     const renderDashboard = () => (
@@ -72,8 +53,9 @@ export default function SellScreen() {
             <Text style={styles.emoji}>📹</Text>
             <Text style={styles.title}>{shopName || 'My Shop'}</Text>
             <Text style={styles.subtitle}>Ready to go live?</Text>
-            <Button title="Go Live" variant="primary" style={{ marginTop: 20, width: 200, backgroundColor: COLORS.accent }} />
-            <Button title="Add Product" variant="secondary" onPress={() => navigateTo('ADD_PRODUCT')} style={{ marginTop: 12, width: 200 }} />
+            <Button title="Go Live" variant="primary" onPress={() => navigation.navigate('StartLive')} style={{ marginTop: 20, width: 200, backgroundColor: COLORS.accent }} />
+            <Button title="Add Product" variant="secondary" onPress={() => navigation.navigate('AddProduct')} style={{ marginTop: 12, width: 200 }} />
+            <Button title="My Products" variant="secondary" onPress={() => navigation.navigate('ProductListings')} style={{ marginTop: 12, width: 200 }} />
         </View>
     );
 
@@ -100,7 +82,6 @@ export default function SellScreen() {
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
                 {viewState === 'LANDING' && renderLanding()}
-                {viewState === 'APPLY' && renderApplyForm()}
                 {viewState === 'DASHBOARD' && renderDashboard()}
                 {viewState === 'ADD_PRODUCT' && renderAddProduct()}
             </KeyboardAvoidingView>

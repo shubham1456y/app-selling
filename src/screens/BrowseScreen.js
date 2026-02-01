@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, TextInput, FlatList, Platform } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, TextInput, FlatList, Platform, TouchableWithoutFeedback } from 'react-native';
 import { COLORS } from '../constants/colors';
 import { CATEGORIES_DATA } from '../constants/data';
 import { Search, Smartphone, Footprints, GalleryVerticalEnd, Shirt, ShoppingBag, Briefcase, Sparkles, Dumbbell, Gamepad2, Music, Clock as ClockIcon, Home, Coffee, Dog } from 'lucide-react-native';
@@ -13,6 +13,7 @@ const IconMap = {
 export default function BrowseScreen({ navigation }) {
     const [activeFilter, setActiveFilter] = useState('Recommended');
     const [searchQuery, setSearchQuery] = useState('');
+    const searchInputRef = useRef(null);
 
     const filteredCategories = CATEGORIES_DATA.filter(cat =>
         cat.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -38,16 +39,19 @@ export default function BrowseScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
             {/* Sticky Header */}
             <View style={styles.header}>
-                <View style={styles.searchContainer}>
-                    <Search color={COLORS.textSecondary} size={20} />
-                    <TextInput
-                        placeholder="Search products, categories..."
-                        placeholderTextColor={COLORS.textSecondary}
-                        style={styles.searchInput}
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                    />
-                </View>
+                <TouchableWithoutFeedback onPress={() => searchInputRef.current?.focus()}>
+                    <View style={styles.searchContainer}>
+                        <Search color={COLORS.textSecondary} size={20} />
+                        <TextInput
+                            ref={searchInputRef}
+                            placeholder="Search products, categories..."
+                            placeholderTextColor={COLORS.textSecondary}
+                            style={styles.searchInput}
+                            value={searchQuery}
+                            onChangeText={setSearchQuery}
+                        />
+                    </View>
+                </TouchableWithoutFeedback>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filters}>
                     {FILTER_BUTTONS.map(filter => (

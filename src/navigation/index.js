@@ -23,11 +23,20 @@ import CategoryLiveScreen from '../screens/CategoryLiveScreen';
 import ActivityScreen from '../screens/ActivityScreen';
 import PaymentsShippingScreen from '../screens/PaymentsShippingScreen';
 import AddressScreen from '../screens/AddressScreen';
+import SellerApplicationScreen from '../screens/SellerApplicationScreen';
 import SellerStoreScreen from '../screens/SellerStoreScreen';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
 import OrderConfirmationScreen from '../screens/OrderConfirmationScreen';
 import { COLORS } from '../constants/colors';
+
+import ViewProfileScreen from '../screens/ViewProfileScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
+import StartLiveScreen from '../screens/StartLiveScreen';
+import AddProductScreen from '../screens/AddProductScreen';
+import ProductListingsScreen from '../screens/ProductListingsScreen';
+import SellerLiveScreen from '../screens/SellerLiveScreen';
+import ViewerLiveScreen from '../screens/ViewerLiveScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -88,12 +97,20 @@ export default function Navigation() {
                 <Stack.Screen name="Subcategory" component={SubcategoryScreen} />
                 <Stack.Screen name="CategoryLive" component={CategoryLiveScreen} />
                 <Stack.Screen name="SellerStore" component={SellerStoreScreen} />
+                <Stack.Screen name="SellerApplication" component={SellerApplicationScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
                 <Stack.Screen name="Checkout" component={CheckoutScreen} />
                 <Stack.Screen name="OrderConfirmation" component={OrderConfirmationScreen} />
                 <Stack.Screen name="Main" component={TabNavigator} />
                 <Stack.Screen name="PaymentsShipping" component={PaymentsShippingScreen} />
                 <Stack.Screen name="Address" component={AddressScreen} />
+                <Stack.Screen name="ViewProfile" component={ViewProfileScreen} />
+                <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+                <Stack.Screen name="StartLive" component={StartLiveScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="AddProduct" component={AddProductScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="ProductListings" component={ProductListingsScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="SellerLive" component={SellerLiveScreen} options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+                <Stack.Screen name="ViewerLive" component={ViewerLiveScreen} options={{ headerShown: false, presentation: 'fullScreenModal' }} />
                 <Stack.Screen
                     name="LiveStream"
                     component={LiveScreen}
